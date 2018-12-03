@@ -1,0 +1,44 @@
+version: '2'
+
+# docker pull aminin/php-symfony
+# docker build --tag=php-sass-node ./docker/php-sass-node
+services:
+  php-server-run:
+    build:
+      context: ./docker/php-server-run
+      dockerfile: Dockerfile
+#    env_file:
+#      - '.env.docker'
+    ports:
+      - '8000:8000'
+    volumes:
+      - './:/home/aminin/bitcoin-node'
+    links:
+      - bitcoin-core
+  bitcoin-core:
+    image: ruimarinho/bitcoin-core:0.17-alpine
+    command:
+      -printtoconsole
+      -regtest=1
+      -rest
+      -rpcallowip=10.211.0.0/16
+      -rpcallowip=172.17.0.0/16
+      -rpcallowip=192.168.0.0/16
+      -rpcpassword=aminin
+      -rpcport=18443
+      -rpcuser=TopSecret321
+      -server
+    ports:
+      - 18443:18443
+    volumes:
+      - '../shared-volumes/bitcoin:/home/bitcoin/.bitcoin'
+
+
+
+networks:
+  default:
+    driver: bridge
+    ipam:
+      config:
+      - gateway: 192.168.52.1
+        subnet: 192.168.52.0/24
