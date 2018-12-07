@@ -10,5 +10,6 @@
 mkdir -p shared-volumes/bitcoin/
 git clone git@github.com:aminin/bitcoin-node.git
 cd bitcoin-node
+composer install
 docker-compose up --build
 ```
