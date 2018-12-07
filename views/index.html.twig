@@ -1,0 +1,66 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    {% if not app['wallet.config'] %}
+        <div class="alert alert-danger" role="alert">
+            <i class="glyphicon glyphicon-exclamation-sign"></i>
+            создайте <i>config.php</i>
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        JSON-RPC Credentials
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless">
+                            <tr><th>Server address:</th><td>{{ app['wallet.config'].server }}:{{ app['wallet.config'].port }}</td></tr>
+                            <tr><th>Username:</th><td>{{ app['wallet.config'].username }}</td></tr>
+                            <tr><th>Password:</th><td>{{ app['wallet.config'].password }}</td></tr>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <a href="/" class="btn btn-primary ml-2">Check balance</a>
+                        <a href="/getnewaddress" class="btn btn-primary ml-2">Create new address</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col col-md-2">
+                <div class="card">
+                    <div class="card-header">
+                        Balance
+                    </div>
+                    <div class="card-body">
+                        {{ balance }} BTC
+                    </div>
+                </div>
+            </div>
+            <div class="col col-md-5">
+                <div class="card">
+                    <div class="card-header">
+                        My Addresses
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for addr in addresses %}
+                            <li class="list-group-item">{{ addr }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col col-md-5">
+                <div class="card">
+                    <div class="card-header">
+                        Transactions
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        {% for trans in transactions %}
+                            <li class="list-group-item"><pre>{{ trans }}</pre></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

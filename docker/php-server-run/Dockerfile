@@ -15,4 +15,4 @@ EXPOSE 8000
 
 ADD variables-order.ini /usr/local/etc/php/conf.d/
 
-CMD php -S 0.0.0.0:8000 -t public ../config/router_dev.php
+CMD php -S 0.0.0.0:8000 -t public public/index.php

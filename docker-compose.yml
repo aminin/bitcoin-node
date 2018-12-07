@@ -19,14 +19,15 @@ services:
     image: ruimarinho/bitcoin-core:0.17-alpine
     command:
       -printtoconsole
-      -regtest=1
+      #-regtest=1
+      -deprecatedrpc=accounts
       -rest
       -rpcallowip=10.211.0.0/16
       -rpcallowip=172.17.0.0/16
       -rpcallowip=192.168.0.0/16
-      -rpcpassword=aminin
+      -rpcuser=testuser
+      -rpcpassword=testpassword
       -rpcport=18443
-      -rpcuser=TopSecret321
       -server
     ports:
       - 18443:18443
